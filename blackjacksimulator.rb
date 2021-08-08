@@ -35,6 +35,7 @@ def draw()
 end
 
 my_total = 0
+num_of_wins  = 0
 draw_list = []
 ace_alt_cond_print = false
 iter_num = 0
@@ -64,37 +65,28 @@ for _ in 0..NUM_OF_SIMULATIONS
         draw_list << draw_result[:key]
         # exit condition
         if my_total == ULTIMATE_GOAL
+            num_of_wins += 1
             case draw_list.size
             when ODDS_OF_TWO_GOAL
                 odds_list[ODDS_OF_TWO_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of two-#{odds_list[ODDS_OF_TWO_GOAL-2]}"
             when ODDS_OF_THREE_GOAL
                 odds_list[ODDS_OF_THREE_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of three-#{odds_list[ODDS_OF_THREE_GOAL-2]}"
             when ODDS_OF_FOUR_GOAL
                 odds_list[ODDS_OF_FOUR_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of four-#{odds_list[ODDS_OF_FOUR_GOAL-2]}"
             when ODDS_OF_FIVE_GOAL
                 odds_list[ODDS_OF_FIVE_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of five-#{odds_list[ODDS_OF_FIVE_GOAL-2]}"
             when ODDS_OF_SIX_GOAL
                 odds_list[ODDS_OF_SIX_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of six-#{odds_list[ODDS_OF_SIX_GOAL-2]}"
             when ODDS_OF_SEVEN_GOAL
                 odds_list[ODDS_OF_SEVEN_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of seven-#{odds_list[ODDS_OF_SEVEN_GOAL-2]}"
             when ODDS_OF_EIGHT_GOAL
                 odds_list[ODDS_OF_EIGHT_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of eight-#{odds_list[ODDS_OF_EIGHT_GOAL-2]}"
             when ODDS_OF_NINE_GOAL
                 odds_list[ODDS_OF_NINE_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of nine-#{odds_list[ODDS_OF_NINE_GOAL-2]}"
             when ODDS_OF_TEN_GOAL
                 odds_list[ODDS_OF_TEN_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of ten-#{odds_list[ODDS_OF_TEN_GOAL-2]}"
             when ODDS_OF_ELEVEN_GOAL
                 odds_list[ODDS_OF_ELEVEN_GOAL-2] += 1
-                p "SIM_NUM-#{iter_num}: Number of odds of eleven-#{odds_list[ODDS_OF_ELEVEN_GOAL-2]}"
             else
                 # Do nothing
             end
@@ -108,4 +100,11 @@ for _ in 0..NUM_OF_SIMULATIONS
             break
         end
     end
+end
+
+puts ("____________RESULT___________")
+puts ("Number of simulations: #{NUM_OF_SIMULATIONS}")
+puts ("Number of winning simulations: #{num_of_wins}")
+for i in 2..11
+    puts ("Number of odds of #{i}: #{odds_list[i-2]}")
 end
