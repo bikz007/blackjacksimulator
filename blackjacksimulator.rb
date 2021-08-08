@@ -45,7 +45,6 @@ end
 num_of_sims = 1
 if ARGV.size > 0
    num_of_sims = number_or_nil ARGV[0]
-   puts num_of_sims
 end
 my_total = 0
 num_of_wins  = 0
