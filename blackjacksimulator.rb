@@ -1,4 +1,4 @@
-BLACKJACK_GOAL       = 21
+BLACKJACK_GOAL      = 21
 ODDS_OF_TWO_GOAL    = 2
 ODDS_OF_THREE_GOAL  = 3
 ODDS_OF_FOUR_GOAL   = 4
@@ -49,34 +49,23 @@ end
 my_total = 0
 num_of_wins  = 0
 draw_list = []
-ace_alt_cond_print = false
 iter_num = 0
-odds_list = []
-odds_list << 0
-odds_list << 0
-odds_list << 0
-odds_list << 0
-odds_list << 0
-odds_list << 0
-odds_list << 0
-odds_list << 0
-odds_list << 0
-odds_list << 0
+odds_list = [0,0,0,0,0,0,0,0,0,0]
 
 for _ in 0..num_of_sims
     iter_num += 1
     while my_total < BLACKJACK_GOAL
         draw_result = draw
+
         # decide ace value
-        if draw_result[:key] == POSSIBLE_DRAWS[:ace] && flip_ace_value
-            if my_total < ACE_ALT_VALUE
-                ace_alt_cond_print = true
-                draw_result[:key] = ACE_ALT_VALUE
-            end
+        if draw_result[:key] == POSSIBLE_DRAWS[:ace] && flip_ace_value && (my_total < ACE_ALT_VALUE)
+            draw_result[:key] = ACE_ALT_VALUE
         end
+
         my_total += draw_result[:key]
         draw_list << draw_result[:key]
-        # exit condition
+
+        # exit condition 1
         if my_total == BLACKJACK_GOAL
             num_of_wins += 1
             case draw_list.size
@@ -106,16 +95,19 @@ for _ in 0..num_of_sims
             draw_list.clear
             my_total = 0
             break
-        end
+        end # exit condition 1 end
+
+        # exit condition 2
         if my_total > BLACKJACK_GOAL
             draw_list.clear
             my_total = 0
             break
-        end
-    end
-end
+        end # exit condition 2 end
 
-puts ("____________RESULT___________")
+    end # while loop end
+end # for loop end
+
+puts ("____________RESULT_____________")
 puts ("Number of simulations: #{num_of_sims}")
 puts ("Number of winning simulations: #{num_of_wins}")
 for i in 2..11
