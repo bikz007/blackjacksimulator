@@ -1,4 +1,4 @@
-ULTIMATE_GOAL       = 21
+BLACKJACK_GOAL       = 21
 ODDS_OF_TWO_GOAL    = 2
 ODDS_OF_THREE_GOAL  = 3
 ODDS_OF_FOUR_GOAL   = 4
@@ -9,7 +9,6 @@ ODDS_OF_EIGHT_GOAL  = 8
 ODDS_OF_NINE_GOAL   = 9
 ODDS_OF_TEN_GOAL    = 10
 ODDS_OF_ELEVEN_GOAL = 11
-NUM_OF_SIMULATIONS  = 22111
 ACE_ALT_VALUE       = 11
 
 POSSIBLE_DRAWS = {
@@ -34,6 +33,20 @@ def draw()
   {key: POSSIBLE_DRAWS[key]}
 end
 
+def flip_ace_value()
+    [true,false].sample
+end
+
+def number_or_nil(string)
+  num = string.to_i
+  num
+end
+
+num_of_sims = 1
+if ARGV.size > 0
+   num_of_sims = number_or_nil ARGV[0]
+   puts num_of_sims
+end
 my_total = 0
 num_of_wins  = 0
 draw_list = []
@@ -50,12 +63,13 @@ odds_list << 0
 odds_list << 0
 odds_list << 0
 odds_list << 0
-for _ in 0..NUM_OF_SIMULATIONS
+
+for _ in 0..num_of_sims
     iter_num += 1
-    while my_total < ULTIMATE_GOAL
+    while my_total < BLACKJACK_GOAL
         draw_result = draw
         # decide ace value
-        if draw_result[:key] == POSSIBLE_DRAWS[:ace]
+        if draw_result[:key] == POSSIBLE_DRAWS[:ace] && flip_ace_value
             if my_total < ACE_ALT_VALUE
                 ace_alt_cond_print = true
                 draw_result[:key] = ACE_ALT_VALUE
@@ -64,7 +78,7 @@ for _ in 0..NUM_OF_SIMULATIONS
         my_total += draw_result[:key]
         draw_list << draw_result[:key]
         # exit condition
-        if my_total == ULTIMATE_GOAL
+        if my_total == BLACKJACK_GOAL
             num_of_wins += 1
             case draw_list.size
             when ODDS_OF_TWO_GOAL
@@ -94,7 +108,7 @@ for _ in 0..NUM_OF_SIMULATIONS
             my_total = 0
             break
         end
-        if my_total > ULTIMATE_GOAL
+        if my_total > BLACKJACK_GOAL
             draw_list.clear
             my_total = 0
             break
@@ -103,7 +117,7 @@ for _ in 0..NUM_OF_SIMULATIONS
 end
 
 puts ("____________RESULT___________")
-puts ("Number of simulations: #{NUM_OF_SIMULATIONS}")
+puts ("Number of simulations: #{num_of_sims}")
 puts ("Number of winning simulations: #{num_of_wins}")
 for i in 2..11
     puts ("Number of odds of #{i}: #{odds_list[i-2]}")
